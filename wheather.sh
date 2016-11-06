@@ -8,7 +8,7 @@ measureTemperature() {
 		return 0;
 	else
 		# Get temperature from koponyeg.hu
-		result=$(wget -qO- $1);
+		result=$(curl -s $1);
 		regexp='\s*([0-9]+)&deg;C\s*';
 		[[ $result =~ $regexp ]];
 		echo ${BASH_REMATCH[1]}°C;
@@ -16,12 +16,12 @@ measureTemperature() {
 }
 
 bh=$(measureTemperature "http://koponyeg.hu/t/Budapest")
-gh=$(measureTemperature "http://koponyeg.hu/t/Győr")
+gh=$(measureTemperature "http://koponyeg.hu/t/Gy%C5%91r")
 mh=$(measureTemperature "http://koponyeg.hu/t/Miskolc")
 dh=$(measureTemperature "http://koponyeg.hu/t/Debrecen")
-ph=$(measureTemperature "http://koponyeg.hu/t/Pécs")
+ph=$(measureTemperature "http://koponyeg.hu/t/P%C3%A9cs")
 sh=$(measureTemperature "http://koponyeg.hu/t/Szeged")
-zh=$(measureTemperature "http://koponyeg.hu/t/Siófok")
+zh=$(measureTemperature "http://koponyeg.hu/t/Si%C3%B3fok")
 
 printf "\n"
 printf "\033[0;32m                                                       .oydmmo:''.ohdo- \033[0m\n"
