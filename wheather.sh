@@ -2,6 +2,7 @@
 
 # Current temperature in Hungary
 # Based on TCL script by lew046 (HUP). All credits for lew046.
+# http://hup.hu/node/136351 ( lew046 | 2014. október 30., csütörtök - 22:39 )
 
 measureTemperature() {
 	if [ -z "$1" ]; then
