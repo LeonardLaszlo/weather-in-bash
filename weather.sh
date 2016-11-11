@@ -4,25 +4,20 @@
 # Based on TCL script by lew046 (HUP). All credits for lew046.
 # http://hup.hu/node/136351 ( lew046 | 2014. október 30., csütörtök - 22:39 )
 
-measureTemperature() {
-	if [ -z "$1" ]; then
-		return 0;
-	else
-		# Get temperature from koponyeg.hu
-		result=$(curl -s $1);
-		regexp='\s*([0-9]+)&deg;C\s*';
-		[[ $result =~ $regexp ]];
-		echo ${BASH_REMATCH[1]}°C;
-	fi
+readTemperature() {
+	[[ "$1" =~ $2 ]];
+	echo ${BASH_REMATCH[1]}°C;
 }
 
-bh=$(measureTemperature "http://koponyeg.hu/t/Budapest")
-gh=$(measureTemperature "http://koponyeg.hu/t/Gy%C5%91r")
-mh=$(measureTemperature "http://koponyeg.hu/t/Miskolc")
-dh=$(measureTemperature "http://koponyeg.hu/t/Debrecen")
-ph=$(measureTemperature "http://koponyeg.hu/t/P%C3%A9cs")
-sh=$(measureTemperature "http://koponyeg.hu/t/Szeged")
-zh=$(measureTemperature "http://koponyeg.hu/t/Si%C3%B3fok")
+rawdata=$(curl -s "http://koponyeg.hu/index.php?m=weathermap&a=temperaturemap&_ajax=1");
+
+bh=$(readTemperature "$rawdata" '"text":"([0-9]+)\\u00b0","textcolor":"[a-zA-Z]+","bigtext":"[0-9a-zA-Z\\]+","big_icon":"[0-9a-zA-Z@\.\+\\\/]+","cityname":"Budapest"');
+gh=$(readTemperature "$rawdata" '"text":"([0-9]+)\\u00b0","textcolor":"[a-zA-Z]+","bigtext":"[0-9a-zA-Z\\]+","big_icon":"[0-9a-zA-Z@\.\+\\\/]+","cityname":"Gy\\u0151r"');
+mh=$(readTemperature "$rawdata" '"text":"([0-9]+)\\u00b0","textcolor":"[a-zA-Z]+","bigtext":"[0-9a-zA-Z\\]+","big_icon":"[0-9a-zA-Z@\.\+\\\/]+","cityname":"Miskolc"');
+dh=$(readTemperature "$rawdata" '"text":"([0-9]+)\\u00b0","textcolor":"[a-zA-Z]+","bigtext":"[0-9a-zA-Z\\]+","big_icon":"[0-9a-zA-Z@\.\+\\\/]+","cityname":"Debrecen"');
+ph=$(readTemperature "$rawdata" '"text":"([0-9]+)\\u00b0","textcolor":"[a-zA-Z]+","bigtext":"[0-9a-zA-Z\\]+","big_icon":"[0-9a-zA-Z@\.\+\\\/]+","cityname":"P\\u00e9cs"');
+sh=$(readTemperature "$rawdata" '"text":"([0-9]+)\\u00b0","textcolor":"[a-zA-Z]+","bigtext":"[0-9a-zA-Z\\]+","big_icon":"[0-9a-zA-Z@\.\+\\\/]+","cityname":"Szeged"');
+zh=$(readTemperature "$rawdata" '"text":"([0-9]+)\\u00b0","textcolor":"[a-zA-Z]+","bigtext":"[0-9a-zA-Z\\]+","big_icon":"[0-9a-zA-Z@\.\+\\\/]+","cityname":"Si\\u00f3fok"');
 
 printf "\n"
 printf "\033[0;32m                                                       .oydmmo:''.ohdo- \033[0m\n"
