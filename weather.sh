@@ -7,20 +7,21 @@
 # Map printing based on TCL script by lew046 (HUP).
 # http://hup.hu/node/136351 ( lew046 | 2014. október 30., csütörtök - 22:39 )
 
-readTemperature() {
-	[[ "$1" =~ $2 ]];
+match() {
+	regexp='"text":"([0-9]+)\\u00b0"[0-9a-zA-Z@/,_:\.\+\\"]+"cityname":"'$2'"';
+	[[ $1 =~ $regexp ]];
 	echo ${BASH_REMATCH[1]}°C;
 }
 
 rawdata=$(curl -s "http://koponyeg.hu/index.php?m=weathermap&a=temperaturemap&_ajax=1");
 
-bh=$(readTemperature "$rawdata" '"text":"([0-9]+)\\u00b0","textcolor":"[a-zA-Z]+","bigtext":"[0-9a-zA-Z\\]+","big_icon":"[0-9a-zA-Z@\.\+\\\/]+","cityname":"Budapest"');
-gh=$(readTemperature "$rawdata" '"text":"([0-9]+)\\u00b0","textcolor":"[a-zA-Z]+","bigtext":"[0-9a-zA-Z\\]+","big_icon":"[0-9a-zA-Z@\.\+\\\/]+","cityname":"Gy\\u0151r"');
-mh=$(readTemperature "$rawdata" '"text":"([0-9]+)\\u00b0","textcolor":"[a-zA-Z]+","bigtext":"[0-9a-zA-Z\\]+","big_icon":"[0-9a-zA-Z@\.\+\\\/]+","cityname":"Miskolc"');
-dh=$(readTemperature "$rawdata" '"text":"([0-9]+)\\u00b0","textcolor":"[a-zA-Z]+","bigtext":"[0-9a-zA-Z\\]+","big_icon":"[0-9a-zA-Z@\.\+\\\/]+","cityname":"Debrecen"');
-ph=$(readTemperature "$rawdata" '"text":"([0-9]+)\\u00b0","textcolor":"[a-zA-Z]+","bigtext":"[0-9a-zA-Z\\]+","big_icon":"[0-9a-zA-Z@\.\+\\\/]+","cityname":"P\\u00e9cs"');
-sh=$(readTemperature "$rawdata" '"text":"([0-9]+)\\u00b0","textcolor":"[a-zA-Z]+","bigtext":"[0-9a-zA-Z\\]+","big_icon":"[0-9a-zA-Z@\.\+\\\/]+","cityname":"Szeged"');
-zh=$(readTemperature "$rawdata" '"text":"([0-9]+)\\u00b0","textcolor":"[a-zA-Z]+","bigtext":"[0-9a-zA-Z\\]+","big_icon":"[0-9a-zA-Z@\.\+\\\/]+","cityname":"Si\\u00f3fok"');
+bh=$(match "$rawdata" 'Budapest');
+gh=$(match "$rawdata" 'Gy\\u0151r');
+mh=$(match "$rawdata" 'Miskolc');
+dh=$(match "$rawdata" 'Debrecen');
+ph=$(match "$rawdata" 'P\\u00e9cs');
+sh=$(match "$rawdata" 'Szeged');
+zh=$(match "$rawdata" 'Si\\u00f3fok');
 
 printf "\n"
 printf "\033[0;32m                                                       .oydmmo:''.ohdo- \033[0m\n"
