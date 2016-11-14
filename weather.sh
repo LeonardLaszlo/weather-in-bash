@@ -8,7 +8,7 @@
 # http://hup.hu/node/136351 ( lew046 | 2014. október 30., csütörtök - 22:39 )
 
 match() {
-	regexp='"text":"([0-9]+)\\u00b0"[0-9a-zA-Z@/,_:\.\+\\"]+"cityname":"'$2'"';
+	regexp='"text":"(\-?[0-9]+)\\u00b0"[0-9a-zA-Z@/,_:\.\+\\"\-]+"cityname":"'$2'"';
 	[[ $1 =~ $regexp ]];
 	echo ${BASH_REMATCH[1]}°C;
 }
