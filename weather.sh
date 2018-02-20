@@ -52,3 +52,18 @@ printf "\033[0;32m               -dMNdmm+         .syMNNMyoo: \033[0m\n"
 printf "\033[0;32m                 ...dMMs++//:.-+mNsy/-. \033[0m\n"
 printf "\033[0;32m                     ./ysshydmNd+' \033[0m\n"
 printf "\n"
+
+globalmarketcap=$(curl -s "https://api.coinmarketcap.com/v1/global/");
+regexp="\"total_market_cap_usd\":[[:space:]]([0-9]+)[,|.][0-9]+"
+if [[ $globalmarketcap =~ $regexp ]]; then
+	globalmarketcap=${BASH_REMATCH[1]}
+	printf "Market capital: %'.1f M$\n" $(( globalmarketcap / 1000000 ))
+fi
+
+bitcoin=$(curl -s "https://api.coinmarketcap.com/v1/ticker/bitcoin/");
+regexp="\"price_usd\":[[:space:]]\"([0-9]+)[,|.][0-9]+\""
+if [[ $bitcoin =~ $regexp ]]; then
+	bitcoin=${BASH_REMATCH[1]}
+	printf "Bitcoin price: %'.1f$\n" $bitcoin
+fi
+
