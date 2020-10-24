@@ -8,7 +8,7 @@
 match() {
 	regexp='"name":"'$2'","longitude":\-?[0-9\.]+,"latitude":\-?[0-9\.]+,"value":(\-?[0-9\.]+),';
 	[[ $1 =~ $regexp ]];
-	echo "${BASH_REMATCH[1]}"°C;
+	echo "${BASH_REMATCH[1]}°C";
 }
 
 rawdata=$(curl -s "https://koponyeg.hu/elorejelzes/Budapest?m=weathermap&a=temperaturemap&_ajax=1");
