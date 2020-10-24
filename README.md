@@ -1,11 +1,6 @@
-# weather-in-hungary
+# Weather in bash
 
-This bash script prints the current temperatures in Hungary.
-
-Get the script by executing:
-```bash
-curl -O https://raw.githubusercontent.com/LeonardLaszlo/weather-in-hungary/master/weather.sh
-```
+Collection of bash scripts which print the current temperatures in a given country.
 
 
-![example.png](https://raw.githubusercontent.com/LeonardLaszlo/weather-in-hungary/master/images/example.png)
+![example.png](https://raw.githubusercontent.com/LeonardLaszlo/weather-in-hungary/master/images/hungary.png)
